@@ -263,8 +263,8 @@ public class TraceView extends ViewPart implements ITraceView {
           PrintDialog printDialog = new PrintDialog(Display.getDefault().getActiveShell());
           printDialog.setText( "Print Trace" );
           PrinterData printerData = printDialog.open();
-          printerData.orientation = PrinterData.LANDSCAPE; // requires version 3.5
           if (printerData != null) {
+            printerData.orientation = PrinterData.LANDSCAPE; // requires version 3.5
             Printer printer = new Printer(printerData);
             if(printer.startJob("Trace graph")) {
               GC gc = new GC(printer);
