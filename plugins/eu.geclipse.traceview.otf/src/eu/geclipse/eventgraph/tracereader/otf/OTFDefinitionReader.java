@@ -192,7 +192,8 @@ public class OTFDefinitionReader {
       }
       // Unsupported Definition
       else {
-        Activator.getDefault().getLog().log( new Status( IStatus.WARNING, Activator.PLUGIN_ID, "Unsupported OTF Definition Type: " + line ) );
+    	// Commented out since it spams the log
+        //Activator.getDefault().getLog().log( new Status( IStatus.WARNING, Activator.PLUGIN_ID, "Unsupported OTF Definition Type: " + line ) );
       }
     }
   }

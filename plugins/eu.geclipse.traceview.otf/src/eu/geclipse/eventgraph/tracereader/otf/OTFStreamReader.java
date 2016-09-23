@@ -153,7 +153,8 @@ class OTFStreamReader extends OTFUtils {
     }
     for( String key : this.unknownEventTypes.keySet() ) {
       int[] value = this.unknownEventTypes.get( key );
-      Activator.getDefault().getLog().log( new Status( IStatus.WARNING, Activator.PLUGIN_ID, "Unsupported OTF Event Type " + key + " occured " + value[ 0 ] + " times in file" ) );
+      // commented out since it spams the log
+      //Activator.getDefault().getLog().log( new Status( IStatus.WARNING, Activator.PLUGIN_ID, "Unsupported OTF Event Type " + key + " occured " + value[ 0 ] + " times in file" ) );
     }
   }
 
