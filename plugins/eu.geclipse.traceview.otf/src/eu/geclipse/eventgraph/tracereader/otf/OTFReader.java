@@ -240,7 +240,10 @@ public class OTFReader extends AbstractTraceFileCache implements IPhysicalTrace,
   }
 
   int getProcessIdForOTFIndex( final int processId ) {
-    return this.processIdMap.get( Integer.valueOf( processId ) ).intValue();
+    Integer procId = this.processIdMap.get( Integer.valueOf( processId ) );
+    if (procId == null)
+    	throw new IndexOutOfBoundsException("id: " + processId);
+    return procId.intValue();
   }
 
   Process getProcessTraceForOTFIndex( final int processId ) throws IndexOutOfBoundsException {
