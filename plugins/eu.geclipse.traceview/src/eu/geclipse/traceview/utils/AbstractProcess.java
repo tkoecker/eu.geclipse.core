@@ -18,6 +18,7 @@ package eu.geclipse.traceview.utils;
 import java.util.ArrayList;
 
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
+import org.eclipse.ui.views.properties.PropertyDescriptor;
 
 import eu.geclipse.traceview.IEvent;
 import eu.geclipse.traceview.ILamportEvent;
@@ -34,6 +35,12 @@ public abstract class AbstractProcess
 
   protected int startTimeOffset;
 
+  /** Number of Events */
+  public static final String PROP_NUMEVENTS = "Process.NumberOfEvents"; //$NON-NLS-1$
+  private static IPropertyDescriptor[] processDescriptors = new IPropertyDescriptor[]{
+    new PropertyDescriptor( PROP_NUMEVENTS, "Number of Events" ) //$NON-NLS-1$
+  };
+
   @Override
   public String toString() {
     return "Process: " + getProcessId(); //$NON-NLS-1$
@@ -48,7 +55,7 @@ public abstract class AbstractProcess
    * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
    */
   public IPropertyDescriptor[] getPropertyDescriptors() {
-    return new IPropertyDescriptor[ 0 ];
+    return processDescriptors;
   }
 
   /*
@@ -57,8 +64,11 @@ public abstract class AbstractProcess
    * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(java.lang.Object)
    */
   public Object getPropertyValue( final Object id ) {
-    // no properties by default
-    return null;
+	    Object result = null;
+	    if( id.equals( PROP_NUMEVENTS ) ) {
+	      result = Integer.valueOf(getMaximumLogicalClock()+1);
+	    }
+	    return result;
   }
 
   /*

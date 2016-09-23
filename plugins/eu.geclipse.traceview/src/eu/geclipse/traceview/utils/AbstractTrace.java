@@ -32,9 +32,12 @@ public abstract class AbstractTrace implements ITrace {
   public static final String PROP_NUMPROCS = "Trace.NumberOfProcesses"; //$NON-NLS-1$
   /** Trace Name */
   public static final String PROP_NAME = "Trace.Name"; //$NON-NLS-1$
+  /** Number of Events */
+  public static final String PROP_NUMEVENTS = "Trace.NumberOfEvents"; //$NON-NLS-1$
   private static IPropertyDescriptor[] traceDescriptors = new IPropertyDescriptor[]{
     new PropertyDescriptor( PROP_NUMPROCS, "Number of Processes" ), //$NON-NLS-1$
-    new PropertyDescriptor( PROP_NAME, "Trace Name" ) //$NON-NLS-1$
+    new PropertyDescriptor( PROP_NAME, "Trace Name" ), //$NON-NLS-1$
+    new PropertyDescriptor( PROP_NUMEVENTS, "Number of Events" ) //$NON-NLS-1$
   };
   final protected Map<String, Object> userData;
 
@@ -81,6 +84,12 @@ public abstract class AbstractTrace implements ITrace {
       result = Integer.valueOf( getNumberOfProcesses() );
     } else if( id.equals( PROP_NAME ) ) {
       result = getName();
+    } else if( id.equals( PROP_NUMEVENTS ) ) {
+      int eventCount = 0;
+      for (int i = 0; i < getNumberOfProcesses(); i++) {
+    	  eventCount += getProcess(i).getMaximumLogicalClock()+1;
+      }
+      result = Integer.valueOf(eventCount);
     }
     return result;
   }
