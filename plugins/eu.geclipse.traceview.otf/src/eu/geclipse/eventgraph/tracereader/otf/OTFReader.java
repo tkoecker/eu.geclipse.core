@@ -169,6 +169,7 @@ public class OTFReader extends AbstractTraceFileCache implements IPhysicalTrace,
         Activator.logException(new Exception("Clock calculation failed for trace \"" + file.getAbsolutePath() + '"', e));
       }
     }
+    this.input.close();
     return this;
   }
 

@@ -156,6 +156,7 @@ class OTFStreamReader extends OTFUtils {
       // commented out since it spams the log
       //Activator.getDefault().getLog().log( new Status( IStatus.WARNING, Activator.PLUGIN_ID, "Unsupported OTF Event Type " + key + " occured " + value[ 0 ] + " times in file" ) );
     }
+    this.input.close();
   }
 
   @SuppressWarnings("boxing")

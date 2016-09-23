@@ -106,6 +106,7 @@ public class OTFDefinitionReader {
       // this.input = new BufferedReader( new InputStreamReader( new InflaterInputStream( new FileInputStream( zFile ) ) ) );
     }
     read();
+    this.input.close();
   }
 
   private void read() throws IOException {
