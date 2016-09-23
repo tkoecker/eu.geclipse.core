@@ -197,7 +197,7 @@ class LogicalGraphPaintListener extends AbstractGraphPaintListener {
         drawEvent( event, x, y );
         if( event.getType() == EventType.SEND
             || event.getType() == EventType.RECV ) {
-          this.gc.setLineWidth( 0 );
+ //         this.gc.setLineWidth( 0 ); // printing workaround
           this.gc.setLineStyle( SWT.LINE_SOLID );
           // set connections color
           Color messageColor = null;
@@ -236,7 +236,7 @@ class LogicalGraphPaintListener extends AbstractGraphPaintListener {
         }
         int[] poly = null;
         this.gc.setLineStyle( eventmarker.getLineStyle( markType ) );
-        this.gc.setLineWidth( eventmarker.getLineWidth( markType ) );
+//        this.gc.setLineWidth( eventmarker.getLineWidth( markType ) ); // printing workaround
         if ( markType == IEventMarker.Diamond_Event ) {
           poly = new int[] {
             x + this.eventSize / 2,
@@ -273,14 +273,17 @@ class LogicalGraphPaintListener extends AbstractGraphPaintListener {
         }
         color = eventmarker.getForegroundColor( markType );
         if( color != null ) {
+          int lineOffset = 0; // (int) (2*gc.getLineWidth()); // printing workaround
+          int x2 = x-lineOffset;
+          int y2 = y-lineOffset;
           this.gc.setForeground( color );
           if ( poly != null ) this.gc.drawPolygon( poly );
-          else if ( markType == IEventMarker.Ellipse_Event) this.gc.drawOval( x, y, this.eventSize, this.eventSize );
+          else if ( markType == IEventMarker.Ellipse_Event) this.gc.drawOval( x2, y2, this.eventSize, this.eventSize );
           else if ( markType == IEventMarker.Rectangle_Event) 
-            this.gc.drawRectangle( x, y, this.eventSize, this.eventSize );
+            this.gc.drawRectangle( x2, y2, this.eventSize, this.eventSize );
           else if ( markType == IEventMarker.Cross_Event) {
-            this.gc.drawLine( x, y, x + this.eventSize, y + this.eventSize );
-            this.gc.drawLine( x, y + this.eventSize, x + this.eventSize, y );
+            this.gc.drawLine( x2, y2, x2 + this.eventSize, y2 + this.eventSize );
+            this.gc.drawLine( x2, y2 + this.eventSize, x2 + this.eventSize, y );
           }
         }
       }
@@ -560,6 +563,13 @@ class LogicalGraphPaintListener extends AbstractGraphPaintListener {
       int x2 = getXPosForClock( event.getPartnerLamportClock() );
       int y2 = getYPosForProcId( event.getPartnerProcessId() );
       if (y1 == y2) return;
+           
+      int lineOffset = 0; // (int) (2*gc.getLineWidth()); // printing workaround
+      x1 -= lineOffset;
+      x2 -= lineOffset;
+      y1 -= lineOffset;
+      y2 -= lineOffset;
+      
       if( event.getType() == EventType.SEND ) {
         connection( x1, y1, x2, y2, true );
       } else {
